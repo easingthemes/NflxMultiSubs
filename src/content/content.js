@@ -1,5 +1,6 @@
-const console = require('./console');
+import { console } from '../lib/utils/console';
 
+console.log('TREST content');
 
 window.addEventListener('load', () => {
   let scriptElem = document.createElement('script');
@@ -9,10 +10,11 @@ window.addEventListener('load', () => {
     })();`;
   document.body.appendChild(scriptElem);
 
-  const scriptsToInject = ['nflxmultisubs.min.js'];
+  const scriptsToInject = ['lib/lib.min.js'];
   scriptsToInject.forEach(scriptName => {
     const scriptElem = document.createElement('script');
     scriptElem.setAttribute('type', 'text/javascript');
+    console.log('chrome.extension.getURL(scriptName)', scriptName, chrome.extension.getURL(scriptName));
     scriptElem.setAttribute('src', chrome.extension.getURL(scriptName));
     document.head.appendChild(scriptElem);
     console.log(`Injected: ${scriptName}`);

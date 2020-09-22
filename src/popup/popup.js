@@ -1,3 +1,5 @@
+import {console} from '../lib/utils/console';
+
 let settings = {};
 
 const port = chrome.runtime.connect({ name: 'settings' });
@@ -174,3 +176,5 @@ window.addEventListener('load', evt => {
     resetSettings();
   }, false);
 });
+
+console.log('TREST popup');

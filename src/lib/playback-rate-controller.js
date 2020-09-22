@@ -1,4 +1,4 @@
-class PlaybackRateController {
+export class PlaybackRateController {
   constructor() {
     this.keyUpHandler = undefined;
     this.timer = undefined;
@@ -67,5 +67,3 @@ class PlaybackRateController {
     }, 200);
   }
 }
-
-module.exports = PlaybackRateController;

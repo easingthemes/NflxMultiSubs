@@ -1,6 +1,7 @@
-const kDefaultSettings = require('./default-settings');
+import { kDefaultSettings } from '../lib/default-settings';
+import { console } from '../lib/utils/console';
 
-
+console.log('TREST background');
 ////////////////////////////////////////////////////////////////////////////////
 
 

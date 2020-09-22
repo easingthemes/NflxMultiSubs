@@ -8,9 +8,12 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 // =============================================================================
 
 const mode = (process.env.NODE_ENV || 'production');
+const isProd = mode === 'production';
+const watch = !!process.env.WATCH;
 
 const kProjectDir = __dirname;
-const kSourceDir = path.join(kProjectDir, 'src');
+const sourceDir = path.join(kProjectDir, 'src');
+const jsSourceDir = path.join(kProjectDir, 'src', 'js');
 const kBuildDir = path.join(kProjectDir, 'build');
 const kModulesDir = path.join(kProjectDir, 'node_modules');
 
@@ -18,27 +21,45 @@ const kModulesDir = path.join(kProjectDir, 'node_modules');
 // -----------------------------------------------------------------------------
 
 const browsers = ['chrome', 'firefox'];
+
 const configs = browsers.map(browser => {
   const buildDir = path.join(kBuildDir, browser);
   return {
     mode: mode,
-
+    devtool: isProd ? false : 'inline-source-map',
+    watch: watch,
     entry: {
-      background: path.join(kSourceDir, 'background.js'),
-      content: path.join(kSourceDir, 'content.js'),
-      settings: path.join(kSourceDir, 'settings.js'),
-      nflxmultisubs: path.join(kSourceDir, 'nflxmultisubs.js'),
+      'background/background.min.js': path.join(sourceDir, 'background', 'background.js'),
+      'content/content.min.js': path.join(sourceDir, 'content', 'content.js'),
+      'popup/popup.min.js': path.join(sourceDir, 'popup', 'popup.js'),
+      'lib/lib.min.js': path.join(sourceDir, 'lib', 'nflxmultisubs.js')
     },
     output: {
       path: buildDir,
-      filename: '[name].min.js',
+      filename: '[name]',
     },
-
+    module: {
+      rules: [
+        {
+          enforce: 'post',
+          test: /\.js$/,
+          exclude: /node_modules/,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: [['@babel/preset-env', { useBuiltIns: 'usage', corejs: 3 }]],
+              plugins: ['@babel/plugin-transform-runtime', '@babel/plugin-proposal-object-rest-spread']
+            }
+          }
+        }
+      ]
+    },
     plugins: [
       new CleanWebpackPlugin(),
-      new CopyWebpackPlugin([
+      new CopyWebpackPlugin({
+        patterns: [
         {
-          from: path.join(kSourceDir, 'manifest.json'),
+          from: path.join(sourceDir, 'manifest.json'),
           transform: (content, path) => Buffer.from(JSON.stringify({
             short_name: process.env.npm_package_name,
             description: process.env.npm_package_description,
@@ -47,10 +68,11 @@ const configs = browsers.map(browser => {
           }, null, '\t')),
         },
         {
-          from: path.join(kSourceDir, '*.+(html|png|css)'),
-          flatten: true,
+          from: path.join(sourceDir, '**/*.+(html|png|css)'),
+          context: sourceDir,
+          // flatten: true,
         },
-      ]),
+      ]}),
       new webpack.DefinePlugin({
         VERSION: JSON.stringify(process.env.npm_package_version),
         BROWSER: JSON.stringify(browser),

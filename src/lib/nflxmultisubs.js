@@ -1,7 +1,7 @@
-const console = require('./console');
-const JSZip = require('jszip');
-const kDefaultSettings = require('./default-settings');
-const PlaybackRateController = require('./playback-rate-controller');
+import { console } from './utils/console';
+import JSZip from 'jszip';
+import { kDefaultSettings } from './default-settings';
+import { PlaybackRateController } from './playback-rate-controller';
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -488,7 +488,7 @@ bodyObserver.observe(document.body, observerOptions);
 
 ////////////////////////////////////////////////////////////////////////////////
 
-activateSubtitle = id => {
+const activateSubtitle = id => {
   const sub = gSubtitles[id];
   if (sub) {
     gSubtitles.forEach(sub => sub.deactivate());
@@ -1154,7 +1154,7 @@ if (BROWSER === 'firefox') {
 }
 
 // =============================================================================
-
+console.log('TREST lib');
 // control video playback rate
 const playbackRateController = new PlaybackRateController();
 playbackRateController.activate();

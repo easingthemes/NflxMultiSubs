@@ -1,4 +1,4 @@
-const kDefaultSettings = {
+export const kDefaultSettings = {
   upperBaselinePos: 0.15,
   lowerBaselinePos: 0.85,
   primaryImageScale: 0.75,
@@ -11,5 +11,3 @@ const kDefaultSettings = {
   secondaryTextStroke: 2.0,
   secondaryTextOpacity: 0.85,
 };
-
-module.exports = kDefaultSettings;
