@@ -5,24 +5,41 @@
   "version": "2.1.2",
   "license": "MIT",
   "private": true,
+  "browsers": [
+    "chrome",
+    "firefox"
+  ],
+  "paths": {
+    "tools": "tools",
+    "build": "build",
+    "src": "src",
+    "tmp": "tmp"
+  },
   "scripts": {
-    "build": "node utils/build.js",
-    "build:dev": "NODE_ENV=development node utils/build.js",
-    "watch:dev": "WATCH=true NODE_ENV=development node utils/build.js",
-    "pack": "node utils/pack.js",
-    "lint": "eslint ./src/*"
+    "build": "npm run build:js && npm run build:css && npm run copy",
+    "build:js": "node ${npm_package_paths_tools}/build.js",
+    "build:js:dev": "NODE_ENV=development node ${npm_package_paths_tools}/build.js",
+    "watch:js": "BROWSER=chrome WATCH=true NODE_ENV=development node ${npm_package_paths_tools}/build.js",
+    "build:css": "node-sass ${npm_package_paths_src}/ -o ${npm_package_paths_build}/${npm_package_paths_tmp}/",
+    "watch:css": "node-sass ${npm_package_paths_src}/ -o ${npm_package_paths_build}/chrome/ -w -r",
+    "copy": "node ${npm_package_paths_tools}/copy.js",
+    "pack": "node ${npm_package_paths_tools}/pack.js",
+    "lint": "eslint ./${npm_package_paths_src}/*"
   },
   "devDependencies": {
-    "babel-loader": "^8.1.0",
     "@babel/plugin-proposal-object-rest-spread": "^7.11.0",
     "@babel/plugin-transform-runtime": "^7.11.5",
+    "babel-loader": "^8.1.0",
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^6.1.1",
     "eslint": "^7.9.0",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-plugin-import": "^2.22.0",
     "fs-extra": "^9.0.0",
+    "gaze": "^1.1.3",
     "jszip": "^3.4.0",
+    "node-sass": "^4.14.1",
+    "svg-inline-loader": "^0.8.2",
     "webpack": "^4.44.2"
   },
   "dependencies": {
