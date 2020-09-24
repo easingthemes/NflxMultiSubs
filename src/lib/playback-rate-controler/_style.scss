@@ -1,0 +1,19 @@
+.nflxmultisubs-playback-rate {
+  position: absolute;
+  top: 10%;
+  right: 5%;
+  font-size: 36px;
+  font-family: 'sans-serif';
+  font-weight: 800;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  z-index: 2;
+  transition: opacity 1s;
+  opacity: 0;
+
+  &.isActive {
+    transition: none;
+    opacity: 1;
+  }
+}

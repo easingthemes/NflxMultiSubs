@@ -19,6 +19,16 @@ window.addEventListener('load', () => {
     document.head.appendChild(scriptElem);
     console.log(`Injected: ${scriptName}`);
   });
+
+  const cssToInject = ['lib/lib.css'];
+  cssToInject.forEach(cssName => {
+    const cssElem = document.createElement('link');
+    cssElem.setAttribute('type', 'text/css');
+    cssElem.setAttribute('rel', 'stylesheet');
+    cssElem.setAttribute('href', chrome.extension.getURL(cssName));
+    document.head.appendChild(cssElem);
+    console.log(`Injected: ${cssName}`);
+  });
 });
 
 
