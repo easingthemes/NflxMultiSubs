@@ -1,7 +1,7 @@
 import { console } from './utils/console';
 import JSZip from 'jszip';
 import { kDefaultSettings } from './default-settings';
-import { PlaybackRateController } from './playback-rate-controller';
+import { PlaybackRateController } from './playback-rate-controler/playback-rate-controller';
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -607,8 +607,8 @@ class PrimaryTextTransformer {
       // let's use `<style>` + `!imporant` to outrun the offical player...
       const wrapper = document.createElement('div');
       wrapper.classList.add('nflxmultisubs-primary-wrapper');
-      wrapper.style =
-        'position:absolute; width:100%; height:100%; top:0; left:0;';
+      // wrapper.style =
+       //  'position:absolute; width:100%; height:100%; top:0; left:0;';
 
       const styleElem = document.createElement('style');
       wrapper.appendChild(styleElem);
